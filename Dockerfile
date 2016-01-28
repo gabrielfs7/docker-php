@@ -1,3 +1,10 @@
-FROM ubuntu:14.04
+FROM php:7-fpm
 MAINTAINER gabrielfs7@gmail.com
-RUN apt-get update && apt-get install -y nginx && apt-get clean
+RUN apt-get update && apt-get install -y \
+    nginx \
+    wget \
+    unzip \
+    supervisor \
+    && pecl install xdebug \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && apt-get clean
