@@ -33,11 +33,12 @@ docker-compose up -d
 
 ### Access from your local machine
 
-1. If using docher-machine, discover your virtual ip by typing:
+If using docher-machine, discover your virtual ip by typing:
 ```
-docker ip dev
+docker-machine ip dev
 ```
-2. Acccess in your browser
+
+Acccess in your browser:
 ```
 http://YOUR_IP:8080
 ```
@@ -62,7 +63,7 @@ docker rm -f $(docker ps -a -q)
 docker rmi -f $(docker images -q)
 ```
 
-### Discovering errors/ viewing logs
+### Discovering errors/viewing logs
 
 ```
 docker-compose logs
