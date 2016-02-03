@@ -4,33 +4,39 @@ web:
   ports:
    - "8080:8080"
   volumes:
-    - ./docker/nginx/vhost_dev.conf:/etc/nginx/sites-enabled/default
+    - $HOME/workspace:/var/www/html/workspace
+    - ./nginx/vhost.dev:/etc/nginx/sites-enabled/default
   links:
-    - mariadb
-    - memcached
-    - redis
+    - mariadb:mariadb
+    - memcached:memcached
+    - redis:redis
   environment:
     VIRTUAL_HOST: dockerphp
     VIRTUAL_PORT: 8080
 
 mariadb:
-  image: tutum/mariadb
-  container_name: api-mariadb
+  image: mariadb:10.1.11
+  restart: always
+  container_name: container-mariadb
   environment:
     MARIADB_USER: admin
     MARIADB_PASS: admin
     MYSQL_ROOT_PASSWORD: admin
   ports:
     - "3306:3306"
+  expose:
+    - "3306"
 
 memcached:
   image: memcached:1.4
-  container_name: api-memcached
+  restart: always
+  container_name: container-memcached
   ports:
     - "11211:11211"
 
 redis:
   image: redis:3.0.7
+  restart: always
   container_name: api-redis
   ports:
     - "6380:6380"

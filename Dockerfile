@@ -2,7 +2,7 @@ FROM php:7.0.2-fpm
 MAINTAINER gabrielfs7@gmail.com
 
 # Install dependencies
-RUN apt-get update && apt-get install -y git nginx wget unzip supervisor && apt-get clean
+RUN apt-get update && apt-get install -y git nginx wget net-tools nano unzip supervisor && apt-get clean
 
 # Install Redis for PHP
 RUN git clone -b php7 https://github.com/phpredis/phpredis.git && mv phpredis/ /etc/ && cd /etc/phpredis && phpize && ./configure && make && make install
@@ -21,8 +21,6 @@ ADD php/conf.d /usr/local/etc/php/conf.d
 
 # Restart PHP, Nginx, Redis, Memcached
 RUN service nginx restart
-# RUN service redis-server restart
-# RUN service memcached restart
 
 # Displaying information:
 # RUN php -r "echo '--- PHP EXTENSIONS ---' . PHP_EOL . PHP_EOL . implode(PHP_EOL, get_loaded_extensions());"
