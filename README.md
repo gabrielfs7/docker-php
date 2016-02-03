@@ -38,7 +38,7 @@ If using docher-machine, discover your virtual ip by typing:
 docker-machine ip dev
 ```
 
-Acccess in your browser:
+Access in your browser:
 ```
 http://YOUR_IP:8080
 ```
