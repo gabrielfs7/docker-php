@@ -1,4 +1,5 @@
 web:
+  env_file: ./env.conf
   build: .
   container_name: dockerphp
   ports:
@@ -33,6 +34,8 @@ memcached:
   container_name: container-memcached
   ports:
     - "11211:11211"
+  expose:
+    - "11211"  
 
 redis:
   image: redis:3.0.7
@@ -40,3 +43,5 @@ redis:
   container_name: api-redis
   ports:
     - "6380:6380"
+  expose:
+    - "6380"
