@@ -86,3 +86,9 @@ docker exec -it dockerphp curl localhost:8080
 ```
 docker exec -it dockerphp bash
 ```
+
+### Get container IP
+
+```
+docker inspect <<CONTAINER_NAME>> | grep IPAddress
+```
