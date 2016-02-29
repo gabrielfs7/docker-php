@@ -18,7 +18,7 @@ web:
 mariadb:
   image: mariadb:10.1.11
   restart: always
-  container_name: container-mariadb
+  container_name: mariadb
   environment:
     TERM: dumb
     MARIADB_USER: admin
@@ -32,7 +32,7 @@ mariadb:
 memcached:
   image: memcached:1.4
   restart: always
-  container_name: container-memcached
+  container_name: memcached
   ports:
     - "11211:11211"
   expose:
@@ -41,7 +41,7 @@ memcached:
 redis:
   image: redis:3.0.7
   restart: always
-  container_name: api-redis
+  container_name: redis
   ports:
     - "6380:6380"
   expose:
