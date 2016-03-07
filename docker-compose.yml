@@ -1,5 +1,5 @@
 web:
-  env_file: ./env.conf
+  env_file: ./common.env
   build: .
   container_name: dockerphp
   ports:
@@ -7,6 +7,9 @@ web:
   volumes:
     - $HOME/workspace:/var/www/html/workspace
     - ./nginx/vhost.dev:/etc/nginx/sites-enabled/default
+    - ./log/nginx:/var/log/nginx
+    - ./log/php:/var/log/php
+    - ./log/supervisor:/var/log/supervisor
   links:
     - mariadb:mariadb
     - memcached:memcached
