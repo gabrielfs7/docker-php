@@ -4,7 +4,7 @@ MAINTAINER gabrielfs7@gmail.com
 #
 # Install dependencies
 #
-RUN apk update && apk add git nginx wget net-tools nano unzip supervisor
+RUN apk update && apk add --update openrc alpine-sdk autoconf grep sed util-linux git nginx wget net-tools nano unzip supervisor
 
 #
 # Install Redis for PHP
@@ -30,6 +30,11 @@ ADD php/php.ini /usr/local/etc/php/php.ini
 ADD php/conf.d /usr/local/etc/php/conf.d
 
 #
+# Mount Nginx public directory
+#
+RUN mkdir -p $HOME/workspace
+
+#
 # Restart PHP, Nginx, Redis, Memcached
 #
 RUN service nginx restart
@@ -38,11 +43,6 @@ RUN service nginx restart
 # Displaying information:
 #
 RUN php -r "echo '--- PHP EXTENSIONS ---' . PHP_EOL . PHP_EOL . implode(PHP_EOL, get_loaded_extensions());"
-
-#
-# Mount Nginx public directory
-#
-RUN mkdir -p $HOME/workspace
 
 WORKDIR /var/www/html/workspace
 
