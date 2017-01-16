@@ -11,17 +11,17 @@ web:
     - ./log/php:/var/log/php
     - ./log/supervisor:/var/log/supervisor
   links:
-    - mariadb:mariadb
-    - memcached:memcached
-    - redis:redis
+    - mariadb: dockerphp-mariadb
+    - memcached: dockerphp-memcached
+    - redis: dockerphp-redis
   environment:
     VIRTUAL_HOST: dockerphp
     VIRTUAL_PORT: 8080
 
 mariadb:
-  image: mariadb:10.1.11
+  image: mariadb:10.1.20
   restart: always
-  container_name: mariadb
+  container_name: dockerphp-mariadb
   environment:
     TERM: dumb
     MARIADB_USER: admin
@@ -33,18 +33,18 @@ mariadb:
     - "3306"
 
 memcached:
-  image: memcached:1.4
+  image: memcached:1.4.34
   restart: always
-  container_name: memcached
+  container_name: dockerphp-memcached
   ports:
     - "11211:11211"
   expose:
-    - "11211"  
+    - "11211"
 
 redis:
   image: redis:3.0.7
   restart: always
-  container_name: redis
+  container_name: dockerphp-redis
   ports:
     - "6380:6380"
   expose:
