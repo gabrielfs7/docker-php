@@ -35,11 +35,6 @@ ADD php/conf.d /usr/local/etc/php/conf.d
 RUN mkdir -p $HOME/workspace
 
 #
-# Restart PHP, Nginx, Redis, Memcached
-#
-RUN service nginx restart
-
-#
 # Displaying information:
 #
 RUN php -r "echo '--- PHP EXTENSIONS ---' . PHP_EOL . PHP_EOL . implode(PHP_EOL, get_loaded_extensions());"
