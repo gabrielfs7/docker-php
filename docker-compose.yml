@@ -11,9 +11,9 @@ web:
     - ./log/php:/var/log/php
     - ./log/supervisor:/var/log/supervisor
   links:
-    - mariadb: dockerphp-mariadb
-    - memcached: dockerphp-memcached
-    - redis: dockerphp-redis
+    - mariadb:dockerphp-mariadb
+    - memcached:dockerphp-memcached
+    - redis:dockerphp-redis
   environment:
     VIRTUAL_HOST: dockerphp
     VIRTUAL_PORT: 8080
