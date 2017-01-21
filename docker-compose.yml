@@ -6,6 +6,8 @@ web:
    - "8080:8080"
   volumes:
     - $HOME/workspace:/var/www/html/workspace
+    - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
+    - $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
     - ./nginx/vhost.dev:/etc/nginx/sites-enabled/default
     - ./log/nginx:/var/log/nginx
     - ./log/php:/var/log/php
