@@ -1,9 +1,9 @@
 server {
     listen       8080;
 
-    server_name  dockerphp.dev;
-    access_log   /dev/stdout;
-    error_log    /dev/stdout info;
+    server_name  dockerphp.prod;
+    access_log   /var/log/nginx;
+    error_log    /var/log/nginx;
 
     root        /var/www/html/workspace;
     index       index.php;

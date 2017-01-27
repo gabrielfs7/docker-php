@@ -1,3 +1,3 @@
 #!/bin/sh
-docker-machine restart dev
-docker-machine env dev
+docker-machine rm -y dev
+bin/machine-start.sh

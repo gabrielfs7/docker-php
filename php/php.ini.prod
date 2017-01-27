@@ -1,0 +1,2 @@
+date.timezone = "America/Sao_Paulo"
+error_log = /var/log/php

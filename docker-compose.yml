@@ -1,5 +1,4 @@
 web:
-  env_file: ./common.env
   build: .
   container_name: dockerphp
   ports:
@@ -8,20 +7,34 @@ web:
     - $HOME/workspace:/var/www/html/workspace
     - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
     - $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
-    - ./nginx/vhost.dev:/etc/nginx/sites-enabled/default
-    - ./log/nginx:/var/log/nginx
-    - ./log/php:/var/log/php
+    #
+    # Supervisor
+    #
+    - ./supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
     - ./log/supervisor:/var/log/supervisor
+    #
+    # Nginx
+    #
+    - ./nginx/vhost.$ENV:/etc/nginx/sites-enabled/default
+    - ./log/nginx:/var/log/nginx
+    #
+    # PHP
+    #
+    - ./php/php.ini.$ENV:/usr/local/etc/php/php.ini
+    - ./log/php:/var/log/php
   links:
     - mariadb:dockerphp-mariadb
-    - memcached:dockerphp-memcached
-    - redis:dockerphp-redis
+#    - memcached:dockerphp-memcached
+#    - redis:dockerphp-redis
   environment:
     VIRTUAL_HOST: dockerphp
     VIRTUAL_PORT: 8080
 
 mariadb:
-  image: mariadb:10.1.20
+  build: ./mariadb
+
+mariadb:
+  build: ./mariadb
   restart: always
   container_name: dockerphp-mariadb
   environment:
@@ -35,7 +48,7 @@ mariadb:
     - "3306"
 
 memcached:
-  image: memcached:1.4.34
+  build: ./memcached
   restart: always
   container_name: dockerphp-memcached
   ports:
@@ -44,7 +57,7 @@ memcached:
     - "11211"
 
 redis:
-  image: redis:3.0.7
+  build: ./redis
   restart: always
   container_name: dockerphp-redis
   ports:

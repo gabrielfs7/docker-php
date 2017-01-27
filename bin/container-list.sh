@@ -1,5 +1,4 @@
 #!/bin/sh
-
 CONTAINER="dockerphp"
 
 if [ $1 ]; then

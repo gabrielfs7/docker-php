@@ -22,6 +22,11 @@ docker-machine env dev
 eval $(docker-machine env dev)
 ```
 
+### Select ENV or PROD environment configuration ####
+
+1. open bin/environment.sh file
+2. set the ENV=dev or ENV=prod
+
 ### Build and runnig:
 
 1. Download the project to somewhere in your machine, for example: /dockerphp

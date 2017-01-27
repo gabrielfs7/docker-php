@@ -81,14 +81,6 @@ docker-php-ext-install -j$(nproc) apcu
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 #
-# Setup confoguration
-#
-ADD supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-ADD nginx/vhost.prod /etc/nginx/sites-enabled/default
-ADD php/php.ini /usr/local/etc/php/php.ini
-ADD php/conf.d /usr/local/etc/php/conf.d
-
-#
 # Fixing DNS problems
 #
 RUN echo "8.8.8.8" > /etc/resolv.conf
