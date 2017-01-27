@@ -97,3 +97,21 @@ docker exec -it dockerphp bash
 ```
 docker inspect <<CONTAINER_NAME>> | grep IPAddress
 ```
+
+## Accessing MySQL:
+
+From insinde the container web:
+
+```
+mysql -h dockerphp-mariadb -u root -p
+```
+
+and from outside the container
+
+```
+mysql -h <<YOUR_IP>> -u root -p
+```
+
+
+
+
