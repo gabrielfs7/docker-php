@@ -1,67 +1,144 @@
-web:
-  build: .
-  container_name: dockerphp
-  ports:
-   - "8080:8080"
-  volumes:
-    - $HOME/workspace:/var/www/html/workspace
-    - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
-    - $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+version: "3"
+services:
+  web:
+    build: .
+    container_name: dockerphp
+    ports:
+     - "8080:8080"
+    volumes:
+      #
+      # Workspace and SSH
+      #
+      - $HOME/workspace:/var/www/html/workspace
+      - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
+      - $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
+      #
+      # Supervisor
+      #
+      - ./supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+      - ./log/supervisor:/var/log/supervisor
+      #
+      # Nginx
+      #
+      - ./nginx/vhost.$ENV:/etc/nginx/sites-enabled/default
+      - ./log/nginx:/var/log/nginx
+      #
+      # PHP
+      #
+      - ./php/php.ini.$ENV:/usr/local/etc/php/php.ini
+      - ./log/php:/var/log/php
     #
-    # Supervisor
-    #
-    - ./supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
-    - ./log/supervisor:/var/log/supervisor
-    #
-    # Nginx
-    #
-    - ./nginx/vhost.$ENV:/etc/nginx/sites-enabled/default
-    - ./log/nginx:/var/log/nginx
-    #
-    # PHP
-    #
-    - ./php/php.ini.$ENV:/usr/local/etc/php/php.ini
-    - ./log/php:/var/log/php
+    # It will create references in "/etc/hosts" file
+    #  
+    links:
+      - mariadb:dockerphp-mariadb
+      - memcached:dockerphp-memcached
+      - redis:dockerphp-redis
+    environment:
+      VIRTUAL_HOST: dockerphp
+      VIRTUAL_PORT: 8080
   #
-  # It will create references in "/etc/hosts" file
-  #  
-  links:
-    - mariadb:dockerphp-mariadb
-    - memcached:dockerphp-memcached
-    - redis:dockerphp-redis
-  environment:
-    VIRTUAL_HOST: dockerphp
-    VIRTUAL_PORT: 8080
+  # MariaDB configuration
+  #
+  mariadb:
+    build: ./mariadb
+    restart: always
+    container_name: dockerphp-mariadb
+    environment:
+      TERM: dumb
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+  #
+  # Memcached configuration
+  #
+  memcached:
+    build: ./memcached
+    restart: always
+    container_name: dockerphp-memcached
+    ports:
+      - "11211:11211"
+    expose:
+      - "11211"
 
-mariadb:
-  build: ./mariadb
+  #
+  # Redis configuration
+  #
+  redis:
+    build: ./redis
+    restart: always
+    container_name: dockerphp-redis
+    ports:
+      - "6380:6380"
+    expose:
+      - "6380"
 
-mariadb:
-  build: ./mariadb
-  restart: always
-  container_name: dockerphp-mariadb
-  environment:
-    TERM: dumb
-    MYSQL_ROOT_PASSWORD: admin
-  ports:
-    - "3306:3306"
-  expose:
-    - "3306"
+  #
+  # Elasticsearch configuration (Cluster with 2 nodes)
+  #
+  # Reference: https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html
+  #
+  elasticsearch1:
+    build: ./elasticsearch
+    container_name: elasticsearch1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - esnet
+    deploy:
+      resources:
+        limits:
+          memory: 1g
+  elasticsearch2:
+    build: ./elasticsearch
+    depends_on: 
+      - elasticsearch1
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - esdata2:/usr/share/elasticsearch/data
+    networks:
+      - esnet
+    deploy:
+      resources:
+        limits:
+          memory: 1g
 
-memcached:
-  build: ./memcached
-  restart: always
-  container_name: dockerphp-memcached
-  ports:
-    - "11211:11211"
-  expose:
-    - "11211"
+volumes:
+  esdata1:
+    driver: local
+  esdata2:
+    driver: local
 
-redis:
-  build: ./redis
-  restart: always
-  container_name: dockerphp-redis
-  ports:
-    - "6380:6380"
-  expose:
-    - "6380"
+networks:
+  esnet:
+    driver: bridge

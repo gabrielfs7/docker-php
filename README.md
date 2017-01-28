@@ -109,9 +109,5 @@ mysql -h dockerphp-mariadb -u root -p
 and from outside the container
 
 ```
-mysql -h <<YOUR_IP>> -u root -p
+mysql -h <<YOUR_MACHINE_IP>> -u root -p
 ```
-
-
-
-
