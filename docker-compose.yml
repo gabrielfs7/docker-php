@@ -34,6 +34,8 @@ services:
       - mariadb:dockerphp-mariadb
       - memcached:dockerphp-memcached
       - redis:dockerphp-redis
+      - elasticsearch1:dockerphp-elasticsearch1
+      - elasticsearch2:dockerphp-elasticsearch2
     environment:
       VIRTUAL_HOST: dockerphp
       VIRTUAL_PORT: 8080
@@ -62,7 +64,6 @@ services:
       - "11211:11211"
     expose:
       - "11211"
-
   #
   # Redis configuration
   #
@@ -100,8 +101,6 @@ services:
       - esdata1:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-    networks:
-      - esnet
     deploy:
       resources:
         limits:
@@ -126,19 +125,12 @@ services:
       - IPC_LOCK
     volumes:
       - esdata2:/usr/share/elasticsearch/data
-    networks:
-      - esnet
     deploy:
       resources:
         limits:
           memory: 1g
-
 volumes:
   esdata1:
     driver: local
   esdata2:
     driver: local
-
-networks:
-  esnet:
-    driver: bridge
