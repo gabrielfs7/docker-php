@@ -112,10 +112,29 @@ bin/container-bash.sh
 bin/container-ip.sh dockerphp-mariadb
 ```
 
-## Accessing MySQL:
-
-From insinde the container web:
+## Accessing the services containers from inside dockerphp container
 
 ```
-bin/mysql-connect.sh
+dockerphp-mariadb:3306
+dockerphp-redis:6380
+dockerphp-memcached:11211
+dockerphp-elasticsearch1:9200
+```
+
+### Accessing MariaDB:
+
+```
+bin/mariadb-connect.sh
+```
+
+### Accessing Redis:
+
+```
+bin/redis-connect.sh
+```
+
+### Test Elasticsearch cluster status
+
+```
+bin/elasticsearch-status.sh
 ```

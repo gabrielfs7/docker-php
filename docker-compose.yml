@@ -83,7 +83,7 @@ services:
   #
   elasticsearch1:
     build: ./elasticsearch
-    container_name: elasticsearch1
+    container_name: dockerphp-elasticsearch1
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -101,10 +101,6 @@ services:
       - esdata1:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
-    deploy:
-      resources:
-        limits:
-          memory: 1g
   elasticsearch2:
     build: ./elasticsearch
     depends_on: 
@@ -125,10 +121,6 @@ services:
       - IPC_LOCK
     volumes:
       - esdata2:/usr/share/elasticsearch/data
-    deploy:
-      resources:
-        limits:
-          memory: 1g
 volumes:
   esdata1:
     driver: local
