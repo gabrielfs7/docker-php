@@ -2,4 +2,3 @@
 docker-machine create -d virtualbox dev
 docker-machine start dev
 docker-machine env dev
-eval $(docker-machine env dev)

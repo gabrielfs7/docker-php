@@ -3,11 +3,17 @@
 A project that easily provides a php developer's standard environment using Docker with the most important features:
 
 * PHP 7
+* XDebug
 * NGinx
+* Memcached
 * MariaDB
 * Redis
-* Memcache
-* XDebug
+* ElasticSearch
+
+### Download the project:
+
+1. Download the project to somewhere in your machine, for example: /dockerphp
+2. Access the project folder: cd dockerphp
 
 ### If using Docker Machine:
 
@@ -16,9 +22,14 @@ If you are on MAC OS you'll need to install Docker Machine to virtualize a Linux
 1. Start Docker Machine by typing:
 
 ```
-docker-machine create -d virtualbox dev
-docker-machine start dev
-docker-machine env dev
+bin/machine-start.sh
+eval $(docker-machine env dev)
+```
+
+2. Recreate Docker Machine by typing:
+
+```
+bin/machine-recreate.sh
 eval $(docker-machine env dev)
 ```
 
@@ -29,18 +40,15 @@ eval $(docker-machine env dev)
 
 ### Build and runnig:
 
-1. Download the project to somewhere in your machine, for example: /dockerphp
-2. Inside the folder, execute the following command:
 ```
-docker-compose build
-docker-compose up -d
+bin/build.sh
 ```
 
 ### Access from your local machine
 
 If using docher-machine, discover your virtual ip by typing:
 ```
-docker-machine ip dev
+bin/machine-ip.sh
 ```
 
 Access in your browser:
@@ -56,16 +64,28 @@ YOUR_IP = localhost or docher-machine ip.
 docker-compose kill
 ```
 
+### List all containers
+
+```
+bin/container-list.sh
+```
+
+### List all images
+
+```
+bin/container-list-images.sh
+```
+
 ### Forcing removal all containers
 
 ```
-docker rm -f $(docker ps -a -q)
+bin/container-remove-all.sh
 ```
 
 ### Forcing removal all images
 
 ```
-docker rmi -f $(docker images -q)
+bin/container-remove-all-images.sh
 ```
 
 ### Discovering errors/viewing logs
@@ -77,25 +97,19 @@ docker-compose logs
 ### Running commands inside the container
 
 ```
-docker exec -it dockerphp netstat
-```
-
-or 
-
-```
-docker exec -it dockerphp curl localhost:8080
+bin/container-bash-execute.sh dockerphp 'curl localhost:8080'
 ```
 
 ### Access container Bash (line command)
 
 ```
-docker exec -it dockerphp bash
+bin/container-bash.sh
 ```
 
 ### Get container IP
 
 ```
-docker inspect <<CONTAINER_NAME>> | grep IPAddress
+bin/container-ip.sh dockerphp-mariadb
 ```
 
 ## Accessing MySQL:
@@ -103,11 +117,5 @@ docker inspect <<CONTAINER_NAME>> | grep IPAddress
 From insinde the container web:
 
 ```
-mysql -h dockerphp-mariadb -u root -p
-```
-
-and from outside the container
-
-```
-mysql -h <<YOUR_MACHINE_IP>> -u root -p
+bin/mysql-connect.sh
 ```
