@@ -1,4 +1,4 @@
 #!/bin/sh
 echo "\n"
-docker exec -it dockerphp mysql -h dockerphp-mariadb -u root -p
+docker exec -it dockerphp-web mysql -h dockerphp-mariadb -u root -p
 echo "\n"

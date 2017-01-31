@@ -1,4 +1,4 @@
 #!/bin/sh
 echo "\n"
-docker exec -it dockerphp service nginx start
+docker exec -it -d dockerphp-web service nginx start
 echo "\n"

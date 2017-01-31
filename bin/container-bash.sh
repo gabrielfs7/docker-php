@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CONTAINER="dockerphp"
+CONTAINER="dockerphp-web"
 
 if [ $1 ]; then
     CONTAINER=$1

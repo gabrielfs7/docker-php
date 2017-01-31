@@ -1,5 +1,4 @@
 #!/bin/sh
-
 IMAGE="dockerphp_web"
 
 if [ $1 ]; then

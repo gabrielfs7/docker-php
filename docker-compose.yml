@@ -2,7 +2,7 @@ version: "3"
 services:
   web:
     build: .
-    container_name: dockerphp
+    container_name: dockerphp-web
     ports:
      - "8080:8080"
     volumes:
@@ -84,7 +84,7 @@ services:
     build: ./elasticsearch
     container_name: dockerphp-elasticsearch1
     environment:
-      - cluster.name=docker-cluster
+      - cluster.name=dockerphp-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -97,13 +97,13 @@ services:
     cap_add:
       - IPC_LOCK
     volumes:
-      - esdata1:/usr/share/elasticsearch/data
+      - esdata1:$HOME/elasticsearch/data
     ports:
       - 9200:9200
   elasticsearch2:
     build: ./elasticsearch
     environment:
-      - cluster.name=docker-cluster
+      - cluster.name=dockerphp-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=elasticsearch1"
@@ -117,7 +117,7 @@ services:
     cap_add:
       - IPC_LOCK
     volumes:
-      - esdata2:/usr/share/elasticsearch/data
+      - esdata2:$HOME/elasticsearch/data
 volumes:
   esdata1:
     driver: local
