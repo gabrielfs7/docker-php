@@ -10,6 +10,8 @@ A project that easily provides a php developer's standard environment using Dock
 * Redis
 * ElasticSearch
 
+## Install/Configure
+
 ### Download the project:
 
 1. Download the project to somewhere in your machine, for example: /dockerphp
@@ -137,4 +139,20 @@ bin/redis-connect.sh
 
 ```
 bin/elasticsearch-status.sh
+```
+
+## Saving/Loading
+
+To avoid lose image content you can backup/load it by:
+
+### Saving image
+
+```
+bin/image-save.sh dockerphp_web
+```
+
+### Loading image
+
+```
+bin/image-load.sh dockerphp_web
 ```

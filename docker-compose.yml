@@ -35,7 +35,6 @@ services:
       - memcached:dockerphp-memcached
       - redis:dockerphp-redis
       - elasticsearch1:dockerphp-elasticsearch1
-      - elasticsearch2:dockerphp-elasticsearch2
     environment:
       VIRTUAL_HOST: dockerphp
       VIRTUAL_PORT: 8080
@@ -103,8 +102,6 @@ services:
       - 9200:9200
   elasticsearch2:
     build: ./elasticsearch
-    depends_on: 
-      - elasticsearch1
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
