@@ -34,7 +34,7 @@ services:
       - mariadb:dockerphp-mariadb
       - memcached:dockerphp-memcached
       - redis:dockerphp-redis
-      - elasticsearch1:dockerphp-elasticsearch1
+      - elasticsearch1:dockerphp-elasticsearch-1
     environment:
       VIRTUAL_HOST: dockerphp
       VIRTUAL_PORT: 8080
@@ -48,10 +48,14 @@ services:
     environment:
       TERM: dumb
       MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
     ports:
       - "3306:3306"
     expose:
       - "3306"
+    volumes:
+      - $HOME/mariadb/data:/var/lib/mysql
   #
   # Memcached configuration
   #
@@ -74,7 +78,6 @@ services:
       - "6380:6380"
     expose:
       - "6380"
-
   #
   # Elasticsearch configuration (Cluster with 2 nodes)
   #
@@ -82,9 +85,9 @@ services:
   #
   elasticsearch1:
     build: ./elasticsearch
-    container_name: dockerphp-elasticsearch1
+    container_name: dockerphp-elasticsearch-1
     environment:
-      - cluster.name=dockerphp-cluster
+      - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
     ulimits:
@@ -103,7 +106,7 @@ services:
   elasticsearch2:
     build: ./elasticsearch
     environment:
-      - cluster.name=dockerphp-cluster
+      - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - "discovery.zen.ping.unicast.hosts=elasticsearch1"

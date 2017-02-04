@@ -1,5 +1,4 @@
 FROM elasticsearch:5.1.2
-MAINTAINER gabrielfs7@gmail.com
 
 ENV ES_JAVA_OPTS="-Des.path.conf=/etc/elasticsearch"
 
