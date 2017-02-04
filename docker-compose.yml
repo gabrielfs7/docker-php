@@ -55,7 +55,8 @@ services:
     expose:
       - "3306"
     volumes:
-      - $HOME/mariadb/data:/var/lib/mysql
+       - ./mariadb/my.cnf:/etc/mysql/my.cnf
+       #- ./mariadb/data:/var/lib/mysql
   #
   # Memcached configuration
   #
