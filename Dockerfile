@@ -93,4 +93,4 @@ RUN mkdir -p /run/nginx
 RUN service nginx restart
 WORKDIR /var/www/html/workspace
 
-EXPOSE 8080
+EXPOSE 80

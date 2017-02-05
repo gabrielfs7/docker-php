@@ -14,26 +14,17 @@ A project that easily provides a php developer's standard environment using Dock
 
 ### Download the project:
 
-1. Download the project to somewhere in your machine, for example: /dockerphp
+1. Download the project to somewhere in your computer, for example: /dockerphp
 2. Access the project folder, for example: cd /dockerphp
 
-### If using Docker Machine:
+### If using Docker for MacOS
 
-If you are on MAC OS you'll need to install Docker Machine to virtualize a Linux OS Kernel. After install Docker Machine, create one:
+Download Docker for MacOS here:
 
-Start Docker Machine by typing:
+https://docs.docker.com/docker-for-mac/#/download-docker-for-mac
 
-```
-bin/machine-start.sh
-eval $(docker-machine env dev)
-```
-
-Recreate Docker Machine by typing:
-
-```
-bin/machine-recreate.sh
-eval $(docker-machine env dev)
-```
+1. Download and install Docker for Mac
+2. Start it as the documentation shows!
 
 ### Select ENV or PROD environment configuration ####
 
@@ -46,19 +37,10 @@ eval $(docker-machine env dev)
 bin/build.sh
 ```
 
-### Access from your local machine
-
-If using docher-machine, discover your virtual ip by typing:
-```
-bin/machine-ip.sh
-```
-
 Access in your browser:
 ```
-http://YOUR_IP:8080
+http://localhost
 ```
-
-YOUR_IP = localhost or docher-machine ip.
 
 ### Stopping:
 

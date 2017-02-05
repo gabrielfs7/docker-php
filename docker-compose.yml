@@ -4,7 +4,7 @@ services:
     build: .
     container_name: dockerphp-web
     ports:
-     - "8080:8080"
+     - "80:80"
     volumes:
       #
       # Workspace and SSH
@@ -37,7 +37,7 @@ services:
       - elasticsearch1:dockerphp-elasticsearch-1
     environment:
       VIRTUAL_HOST: dockerphp
-      VIRTUAL_PORT: 8080
+      VIRTUAL_PORT: 80
   #
   # MariaDB configuration
   #
@@ -45,18 +45,18 @@ services:
     build: ./mariadb
     restart: always
     container_name: dockerphp-mariadb
+    command: mysqld --innodb-buffer-pool-size=20M
     environment:
-      TERM: dumb
-      MYSQL_ROOT_PASSWORD: admin
-      MYSQL_USER: admin
-      MYSQL_PASSWORD: admin
+      - "MYSQL_USER=admin"
+      - "MYSQL_PASSWORD=admin"
+      - "MYSQL_ROOT_PASSWORD=admin"
     ports:
       - "3306:3306"
     expose:
       - "3306"
     volumes:
        - ./mariadb/my.cnf:/etc/mysql/my.cnf
-       #- ./mariadb/data:/var/lib/mysql
+       - $HOME/mariadb/data:/var/lib/mysql:rw
   #
   # Memcached configuration
   #
