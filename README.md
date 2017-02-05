@@ -54,6 +54,18 @@ docker-compose kill
 bin/container-list.sh
 ```
 
+### Stoping all containers
+
+```
+bin/container-stop-all.sh
+```
+
+### Starting all containers
+
+```
+bin/container-start-all.sh
+```
+
 ### List all images
 
 ```
