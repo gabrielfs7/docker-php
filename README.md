@@ -2,7 +2,7 @@
 
 A project that easily provides a php developer's standard environment using Docker with the most important features:
 
-* PHP 7
+* PHP 7.1
 * XDebug
 * NGinx
 * Memcached
