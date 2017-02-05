@@ -156,3 +156,11 @@ bin/image-save.sh dockerphp_web
 ```
 bin/image-load.sh dockerphp_web
 ```
+
+## Container startup problems
+
+If you are getting any container startup issues, for example if your container keep restarting, you can use the command bellow to start the container with debug mode.
+
+```
+bin/container-restart.sh dockerphp-mariadb
+```
