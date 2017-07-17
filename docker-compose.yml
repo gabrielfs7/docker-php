@@ -125,16 +125,18 @@ services:
     volumes:
       - esdata2:$HOME/elasticsearch/data
   #
-  # RAbbitMQ configuration
+  # RabbitMQ configuration
   #
   rabbitmq:
     build: ./rabbitmq
     restart: always
     container_name: dockerphp-rabbitmq
     ports:
-      - "15671:15671"
+      - "15672:15672" # HTTP Port
+      - "5672:5672"
     expose:
-      - "15671"    
+      - "15672" # HTTP Port
+      - "5672"
 volumes:
   esdata1:
     driver: local
