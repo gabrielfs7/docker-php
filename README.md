@@ -9,6 +9,7 @@ A project that easily provides a php developer's standard environment using Dock
 * MariaDB
 * Redis
 * ElasticSearch
+* RabbitMQ
 
 ## Install/Configure
 

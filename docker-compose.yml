@@ -35,6 +35,7 @@ services:
       - memcached:dockerphp-memcached
       - redis:dockerphp-redis
       - elasticsearch1:dockerphp-elasticsearch-1
+      - rabbitmq:dockerphp-rabbitmq
     environment:
       VIRTUAL_HOST: dockerphp
       VIRTUAL_PORT: 80
@@ -123,6 +124,17 @@ services:
       - IPC_LOCK
     volumes:
       - esdata2:$HOME/elasticsearch/data
+  #
+  # RAbbitMQ configuration
+  #
+  rabbitmq:
+    build: ./rabbitmq
+    restart: always
+    container_name: dockerphp-rabbitmq
+    ports:
+      - "15671:15671"
+    expose:
+      - "15671"    
 volumes:
   esdata1:
     driver: local
