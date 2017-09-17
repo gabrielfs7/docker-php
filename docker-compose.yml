@@ -19,6 +19,10 @@ services:
       # PHP
       #
       - ./log/php:/var/log/php
+      #
+      # Nginx
+      #
+      - ./log/nginx:/var/log/nginx
     #
     # It will create references in "/etc/hosts" file
     #  
@@ -30,17 +34,6 @@ services:
       - rabbitmq:dockerphp_rabbitmq
     depends_on:
         - mysql
-  nginx:
-    build: ./nginx
-    container_name: dockerphp_nginx
-    volumes:
-      #
-      # Workspace and logs
-      #
-      - $HOME/workspace:/var/www/workspace
-      - ./log/nginx:/var/log/nginx
-    depends_on:
-      - mysql
   #
   # MySQL configuration
   #

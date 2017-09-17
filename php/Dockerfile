@@ -5,7 +5,17 @@ RUN apt-get update && apt-get install -y \
     unzip \
     wget \
     supervisor \
-    net-tools
+    net-tools \ 
+    nginx
+
+#
+# Configure Nginx dir
+#
+ADD nginx.conf /etc/nginx/
+ADD vhost.conf /etc/nginx/sites-available/
+RUN rm /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/vhost.conf /etc/nginx/sites-enabled/vhost.conf
+RUN echo "upstream php-upstream { server php:9000; }" > /etc/nginx/conf.d/upstream.conf
 
 #
 # Install Composer
@@ -90,3 +100,7 @@ WORKDIR /var/www/workspace
 
 RUN usermod -u 1000 www-data
 RUN chown -R www-data:www-data /var/www/workspace
+
+EXPOSE 80
+EXPOSE 443
+EXPOSE 8000

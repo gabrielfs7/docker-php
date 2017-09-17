@@ -1,4 +1,4 @@
 #!/bin/sh
 echo "\n"
-docker exec -it dockerphp_nginx service nginx status
+docker exec -it dockerphp_php service nginx status
 echo "\n"

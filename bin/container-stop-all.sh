@@ -1,5 +1,4 @@
 #!/bin/sh
-docker stop dockerphp_nginx
 docker stop dockerphp_php
 docker stop dockerphp_redis
 docker stop dockerphp_memcached

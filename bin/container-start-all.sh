@@ -1,5 +1,4 @@
 #!/bin/sh
-docker start dockerphp_nginx
 docker start dockerphp_php
 docker start dockerphp_redis
 docker start dockerphp_memcached
