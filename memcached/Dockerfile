@@ -1,2 +1,2 @@
-FROM memcached:1.4.34
-MAINTAINER gabrielfs7@gmail.com
+FROM memcached:1.5
+EXPOSE 11211

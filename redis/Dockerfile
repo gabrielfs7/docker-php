@@ -1,2 +1,2 @@
-FROM redis:3.0.7
-MAINTAINER gabrielfs7@gmail.com
+FROM redis:4.0
+EXPOSE 6380

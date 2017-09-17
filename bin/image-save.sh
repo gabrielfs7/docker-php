@@ -1,9 +1,5 @@
 #!/bin/sh
-IMAGE="dockerphp_web"
-
-if [ $1 ]; then
-    IMAGE=$1
-fi
+IMAGE=$1
 
 SAVE_PATH=$HOME/$IMAGE
 

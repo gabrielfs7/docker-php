@@ -1,15 +1,13 @@
-version: "3"
+version: "3.3"
 services:
-  web:
-    build: .
-    container_name: dockerphp-web
-    ports:
-     - "80:80"
+  php:
+    build: ./php
+    container_name: dockerphp_php
     volumes:
       #
       # Workspace and SSH
       #
-      - $HOME/workspace:/var/www/html/workspace
+      - $HOME/workspace:/var/www/workspace
       - $HOME/.ssh/id_rsa:/root/.ssh/id_rsa
       - $HOME/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
       #
@@ -18,68 +16,61 @@ services:
       - ./supervisor/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
       - ./log/supervisor:/var/log/supervisor
       #
-      # Nginx
-      #
-      - ./nginx/vhost.$ENV:/etc/nginx/sites-enabled/default
-      - ./log/nginx:/var/log/nginx
-      #
       # PHP
       #
-      - ./php/php.ini.$ENV:/usr/local/etc/php/php.ini
       - ./log/php:/var/log/php
     #
     # It will create references in "/etc/hosts" file
     #  
     links:
-      - mariadb:dockerphp-mariadb
-      - memcached:dockerphp-memcached
-      - redis:dockerphp-redis
-      - elasticsearch1:dockerphp-elasticsearch-1
-      - rabbitmq:dockerphp-rabbitmq
-    environment:
-      VIRTUAL_HOST: dockerphp
-      VIRTUAL_PORT: 80
-  #
-  # MariaDB configuration
-  #
-  mariadb:
-    build: ./mariadb
-    restart: always
-    container_name: dockerphp-mariadb
-    command: mysqld --innodb-buffer-pool-size=20M
-    environment:
-      - "MYSQL_USER=admin"
-      - "MYSQL_PASSWORD=admin"
-      - "MYSQL_ROOT_PASSWORD=admin"
-    ports:
-      - "3306:3306"
-    expose:
-      - "3306"
+      - mysql:dockerphp_mysql
+      - memcached:dockerphp_memcached
+      - redis:dockerphp_redis
+      - elasticsearch1:dockerphp_elasticsearch_1
+      - rabbitmq:dockerphp_rabbitmq
+    depends_on:
+        - mysql
+  nginx:
+    build: ./nginx
+    container_name: dockerphp_nginx
     volumes:
-       - ./mariadb/my.cnf:/etc/mysql/my.cnf
-       - $HOME/mariadb/data:/var/lib/mysql:rw
+      #
+      # Workspace and logs
+      #
+      - $HOME/workspace:/var/www/workspace
+      - ./log/nginx:/var/log/nginx
+    depends_on:
+      - mysql
+  #
+  # MySQL configuration
+  #
+  mysql:
+    build: ./mysql
+    restart: always
+    container_name: dockerphp_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    healthcheck:
+        test: exit 0
+    volumes:
+        - "./data/mysql:/var/lib/mysql"
   #
   # Memcached configuration
   #
   memcached:
     build: ./memcached
     restart: always
-    container_name: dockerphp-memcached
-    ports:
-      - "11211:11211"
-    expose:
-      - "11211"
+    container_name: dockerphp_memcached
   #
   # Redis configuration
   #
   redis:
     build: ./redis
     restart: always
-    container_name: dockerphp-redis
-    ports:
-      - "6380:6380"
-    expose:
-      - "6380"
+    container_name: dockerphp_redis
   #
   # Elasticsearch configuration (Cluster with 2 nodes)
   #
@@ -87,7 +78,7 @@ services:
   #
   elasticsearch1:
     build: ./elasticsearch
-    container_name: dockerphp-elasticsearch-1
+    container_name: dockerphp_elasticsearch_1
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -102,12 +93,12 @@ services:
     cap_add:
       - IPC_LOCK
     volumes:
-      - esdata1:$HOME/elasticsearch/data
+      - esdata1:$HOME/data/elasticsearch
     ports:
       - 9200:9200
   elasticsearch2:
     build: ./elasticsearch
-    container_name: dockerphp-elasticsearch-2
+    container_name: dockerphp_elasticsearch_2
     environment:
       - cluster.name=docker-cluster
       - bootstrap.memory_lock=true
@@ -123,20 +114,14 @@ services:
     cap_add:
       - IPC_LOCK
     volumes:
-      - esdata2:$HOME/elasticsearch/data
+      - esdata2:$HOME/data/elasticsearch
   #
   # RabbitMQ configuration
   #
   rabbitmq:
     build: ./rabbitmq
     restart: always
-    container_name: dockerphp-rabbitmq
-    ports:
-      - "15672:15672" # HTTP Port
-      - "5672:5672"
-    expose:
-      - "15672" # HTTP Port
-      - "5672"
+    container_name: dockerphp_rabbitmq
 volumes:
   esdata1:
     driver: local

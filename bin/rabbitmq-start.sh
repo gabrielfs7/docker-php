@@ -1,4 +1,4 @@
 #!/bin/sh
 echo "\n"
-docker exec -it dockerphp-rabbitmq rabbitmqctl start_app
+docker exec -it dockerphp_rabbitmq rabbitmqctl start_app
 echo "\n"

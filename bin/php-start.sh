@@ -1,2 +1,2 @@
 #!/bin/sh
-docker exec -it dockerphp-web service nginx restart
+docker exec -it dockerphp_php service php7-fpm restart

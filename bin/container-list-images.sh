@@ -1,2 +1,2 @@
 #!/bin/sh
-docker images
+docker images -a
