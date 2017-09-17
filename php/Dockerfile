@@ -1,13 +1,32 @@
 FROM php:7.1.0-fpm
 
 RUN apt-get update && apt-get install -y \
+    nginx \
+    nodejs \
+    npm \
     git \
+    nano \
     unzip \
     wget \
     supervisor \
     net-tools \ 
-    nginx
-
+    telnet \
+    mysql-client \
+    libicu-dev \
+	libtidy-dev \
+	libmcrypt-dev \
+	libxml2-dev \
+	libxslt1-dev \
+	libfreetype6-dev \
+	libjpeg62-turbo-dev \
+	libpng12-dev \
+	libpq-dev \
+	libmemcached-dev \
+	imagemagick \
+	libmagickwand-dev \
+	g++ && \
+	apt-get clean
+    
 #
 # Configure Nginx dir
 #
