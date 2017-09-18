@@ -32,6 +32,7 @@ RUN apt-get update && apt-get install -y \
 #
 ADD nginx.conf /etc/nginx/
 ADD vhost.conf /etc/nginx/sites-available/
+ADD upstream.conf /etc/nginx/conf.d/
 RUN rm -rf /etc/nginx/sites-enabled/default
 RUN rm -rf /etc/nginx/sites-available/default
 RUN ln -s /etc/nginx/sites-available/vhost.conf /etc/nginx/sites-enabled/vhost.conf
@@ -123,5 +124,3 @@ RUN chown -R www-data:www-data /var/www/workspace
 EXPOSE 80
 EXPOSE 443
 EXPOSE 8000
-
-CMD ["nginx"]
