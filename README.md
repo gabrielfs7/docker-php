@@ -118,6 +118,14 @@ dockerphp-memcached:11211
 dockerphp-elasticsearch1:9200
 ```
 
+### Sync Nginx vhost and configuration
+
+This will update any vhost configuration, etc to your Nginx. Add new files to nginx directory to sync.
+
+```
+bin/nginx/sync.sh
+```
+
 ### Accessing MariaDB:
 
 ```
