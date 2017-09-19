@@ -30,9 +30,9 @@ RUN apt-get update && apt-get install -y \
 #
 # Configure Nginx dir
 #
-ADD nginx.conf /etc/nginx/
-ADD vhost.conf /etc/nginx/sites-available/
-ADD upstream.conf /etc/nginx/conf.d/
+ADD ../nginx/nginx.conf /etc/nginx/
+ADD ../nginx/sites-available/vhost.conf /etc/nginx/sites-available/
+ADD ../nginx/conf.d/upstream.conf /etc/nginx/conf.d/
 RUN rm -rf /etc/nginx/sites-enabled/default
 RUN rm -rf /etc/nginx/sites-available/default
 RUN ln -s /etc/nginx/sites-available/vhost.conf /etc/nginx/sites-enabled/vhost.conf
