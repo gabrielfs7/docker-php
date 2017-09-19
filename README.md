@@ -123,7 +123,7 @@ dockerphp-elasticsearch1:9200
 This will update any vhost configuration, etc to your Nginx. Add new files to nginx directory to sync.
 
 ```
-bin/nginx/sync.sh
+bin/nginx-sync.sh
 ```
 
 ### Accessing MariaDB:
