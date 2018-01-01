@@ -27,20 +27,25 @@ https://docs.docker.com/docker-for-mac/#/download-docker-for-mac
 1. Download and install Docker for Mac
 2. Start it as the documentation shows!
 
-### Select ENV or PROD environment configuration ####
-
-1. open bin/environment.sh file
-2. set the ENV=dev or ENV=prod
-
 ### Build and runnig:
 
 ```
 bin/build.sh
 ```
 
+Configure your local etc/hosts by adding:
+```
+127.0.0.1 dockerphp
+```
+
+Sync your nginx files located in nginx/sites-available folder
+```
+bin/nginx-sync.sh
+```
+
 Access in your browser:
 ```
-http://localhost
+http://dockerphp
 ```
 
 ### Stopping:
