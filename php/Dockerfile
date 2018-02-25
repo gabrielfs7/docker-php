@@ -33,6 +33,11 @@ RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
 RUN bash nodesource_setup.sh
 
 #
+# Install libnotify used by gulp
+#
+RUN apt-get install libnotify-bin
+
+#
 # Configure Nginx dir
 #
 ADD ../nginx/nginx.conf /etc/nginx/
