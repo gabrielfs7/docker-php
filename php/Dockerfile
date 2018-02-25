@@ -2,8 +2,6 @@ FROM php:7.1.0-fpm
 
 RUN apt-get update && apt-get install -y \
     nginx \
-    nodejs \
-    npm \
     git \
     nano \
     unzip \
@@ -27,6 +25,13 @@ RUN apt-get update && apt-get install -y \
 	g++ && \
 	apt-get clean
     
+#
+# Install node
+#
+RUN cd ~
+RUN curl -sL https://deb.nodesource.com/setup_8.x -o nodesource_setup.sh
+RUN bash nodesource_setup.sh
+
 #
 # Configure Nginx dir
 #
