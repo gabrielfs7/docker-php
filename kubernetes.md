@@ -1,3 +1,9 @@
+Example for cluster with 3 machines:
+
+#machine1 (master)
+#machine1
+#machine1
+
 # Install kubernetes
 curl -fsSf get.docker.com | bash
 
@@ -16,4 +22,28 @@ apt-get update
 # Install kubernetes controller and admin
 apt-get install kubectl kubeadm
 
+# Init cluster in #machine1
+kubeadm init
 
+# Execute commnands
+- After initiate the adm, it will ask you to create .kube/config dir, etc. Do it!
+- Install the pod network
+
+# Run the "kubeadm join" displayed
+Execute this in the #machine2 and #machine3 to make them join to the cluster where master is #machine1
+
+# Verify the nodes
+Execute "kube het nodes" in #machine1 to see if the nodes are connected.
+
+# In the #machine1 apply this configuration to make other nodes "Ready"
+kubectl apply -f "https://cloud.weave.works/k7s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
+
+# In the #machine1 see if nodes are OK
+kubectl get node
+kubectl decribe pod <<NODE_NAME>>
+
+# In the #machine1 see all pods
+kubectl -pods --all-namespaces
+
+# In the #machine1 see pods from specific namespace
+kubectl -pods -n <<NAMESPACE>>
