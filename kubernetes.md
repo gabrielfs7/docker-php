@@ -1,8 +1,10 @@
 # Example for cluster with 3 machines:
 
+```
   #machine1 (master)
-  #machine1
-  #machine1
+  #machine2
+  #machine3
+```
 
 # Install kubernetes
 curl -fsSf get.docker.com | bash
