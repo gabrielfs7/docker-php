@@ -47,3 +47,32 @@ kubectl -pods --all-namespaces
 
 # In the #machine1 see pods from specific namespace
 kubectl -pods -n <<NAMESPACE>>
+  
+# In the #machine1 create a deployment
+kubectl run <<DEPLOYMENT_NAME>> --image nginx
+kubectl get deployment
+kubectl get pods
+
+# Verify in #machine1 and #machine2 that ngix docker image is there
+docker ps
+
+# Delete an deployment
+kubectl delete deployment <<DEPLOYMENT_NAME>>
+
+# In the #machine1 create a deployment with 10 replicas
+kubectl run <<DEPLOYMENT_NAME>> --image nginx --replicas 10
+kubectl get deployment
+kubectl get pods
+
+# In the #machine1 scale the deployment 
+kubectl scale deployment <<DEPLOYMENT_NAME>> --replicas 20
+kubectl get deployment
+kubectl get pods
+
+
+
+
+
+
+
+
