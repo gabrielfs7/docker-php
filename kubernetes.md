@@ -55,7 +55,7 @@ kubectl run <<DEPLOYMENT_NAME>> --image nginx
 kubectl get deployment
 kubectl get pods
 
-# Verify in #machine1 and #machine2 that ngix docker image is there
+# Verify in #machine2 and #machine3 that ngix docker image is there
 docker ps
 
 # Delete an deployment
