@@ -74,3 +74,15 @@ kubectl get pods
 # In the #machine1 export deployment config
 kubectl get deployment <<DEPLOYMENT_NAME>> -o yaml > my_config.yaml
 
+# Create a deployment based on config (Change the deployment name inside the config file first)
+kubectl apply -f my_config.yaml
+kubectl get deployment
+kubectl get pods
+
+# In #machine1 See history of changes of deploy
+kubectl rollout history deployment <<DEPLOYMENT_NAME>>
+
+# In #machine1 roolbak a deployment change
+kubectl rollout undo deployment <<DEPLOYMENT_NAME>> --to-revision <<REVISION_NUMBER>>
+
+
