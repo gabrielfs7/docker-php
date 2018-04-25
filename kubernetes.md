@@ -1,8 +1,8 @@
-Example for cluster with 3 machines:
+# Example for cluster with 3 machines:
 
-#machine1 (master)
-#machine1
-#machine1
+  #machine1 (master)
+  #machine1
+  #machine1
 
 # Install kubernetes
 curl -fsSf get.docker.com | bash
@@ -69,10 +69,6 @@ kubectl scale deployment <<DEPLOYMENT_NAME>> --replicas 20
 kubectl get deployment
 kubectl get pods
 
-
-
-
-
-
-
+# In the #machine1 export deployment config
+kubectl get deployment <<DEPLOYMENT_NAME>> -o yaml > my_config.yaml
 
